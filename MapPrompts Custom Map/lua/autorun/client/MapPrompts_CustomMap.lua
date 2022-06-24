@@ -40,9 +40,9 @@ local MPCSMessage = {
 // If you want to remove them then replace '"Custom Prompt"' with "Custom Prompt"
 
 if GetConVar("MapPromptsCampaignTitles"):GetBool() then
-	FixedMessage = '"Custom Fixed Title"'
+	MPCSFixedMessage = '"Custom Fixed Title"'
 	else
-	FixedMessage = table.Random(MPCSMessage)
+	MPCSFixedMessage = table.Random(MPCSMessage)
 end
 
 // This is how we handle the text randomization
@@ -231,7 +231,7 @@ end
 	local ZPos = math.Round(tostring(ply:GetPos().z), 0)
 
 if Message == "" then
-Message = FixedMessage
+Message = MPCSFixedMessage
 end
 
 if !ply:Alive() then
