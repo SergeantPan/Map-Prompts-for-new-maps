@@ -72,7 +72,7 @@ local MPCSCustomLocation = table.Random(MPCSExtraMessage)
 
 // Although you may not use the 12hr style, we still need to apply it
 // However, FakeClockHrAlternate cannot go above 12
-// If FakeClockHr goes above 12, then Alternate restarts at 0
+// The system automatically handles AM/PM transitions
 // Like this:
 // FakeClockHr          = 10 11 12 13 14 15 16 17 18
 // FakeClockHrAlternate = 10 11 12  1  2  3  4  5  6
@@ -117,7 +117,7 @@ local function MapPrompts_Custom_FakeClock() // This is the fake clock
 
 	end
 
-	if GetConVar("MapPromptsTimeStamp12h"):GetBool() and MapPrompts_CustomFakeClockHr >= 12 then
+	if GetConVar("MapPromptsTimeStamp12h"):GetBool() and MapPrompts_CustomFakeClockHrAlternate == 12 then
 	MapPrompts_CustomFakeClockHrAlternate = 00
 
 	end
@@ -143,7 +143,6 @@ hook.Add("HUDPaint", "CustomIdentifier", function(ply)
 // Replace CustomIdentifier with a name of your choosing
 // So far, I've been using the map names as identifiers
 // Reduces the likelyhood of conflicts
-
 
 // Do not touch anything below until the next message
 
@@ -366,9 +365,9 @@ local MapPrompts_CustomSpot = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPr
 // This table contains ALL the custom locations
 // This is how the code triggers the fade in/out mechanic
 // You must ALWAYS put the custom coordinates here:
-// (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 nd ZPos == MapPrompts_CustomSpotZ1)
+// (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1)
 
-local CustomSpot = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1)
+local MapPrompts_CustomSpot1 = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1)
 
 // This is for making specific locations
 // This is how we trigger unique messages
@@ -382,7 +381,7 @@ if !ply:Alive() or PromptsEnabled == false then
 
 // ^ Ignore ^
 
-if CustomSpot then
+if CustomSpot1 then
 	FixedSpotMessage = MPCSCustomLocation
 end
 
