@@ -378,7 +378,6 @@ local MapPrompts_CustomSpot1 = (XPos == MapPrompts_CustomSpotX1 and YPos == MapP
 // This is for making specific locations
 // This is how we trigger unique messages
 // Each unique location must have a separate line
-// Unless you want multiple locations to trigger the same message
 
 if !ply:Alive() or PromptsEnabled == false then
 	SpotTitleStart = false
@@ -402,6 +401,11 @@ end
 // The first part is the title portion, inside the quotation marks
 // The second half is the unique location name, unless unique map names are disabled
 // In which case it changes to the second variant
+																		
+// You can have multiple locations trigger the same prompt aswell
+// Like This:
+// if MapPrompts_CustomSpot1 or MapPrompts_CustomSpot2 then
+// FixedSpotMessage = MapPrompts_Custom1Message1
 
 // Unless you want it to only be a specific text
 // In which case replace MapPrompts_Custom1Message1 with "Custom Text Here"
