@@ -60,19 +60,24 @@ local MPCSExtraMessage = {
 // We can use these for unique locations
 // You'll want to have separate tables for each location, unless you want messages to be shared
 
-local MPCSCustomLocation = table.Random(MPCSExtraMessage)
-//	  ^^						    ^^
+if GetConVar("MapPromptsCampaignTitles"):GetBool() then
+	MapPrompts_Custom1Message1 = '"Map Title"'
+	else
+	MapPrompts_Custom1Message1 = table.Random(MPCSExtraMessage)
+end
+//	  ^^						    			^^
 // If you want, you can rename these
 // This is how the random text is handled, you should leave it alone for the most part
+// It's almost the same as above, except this is for custom locations
 // Do note that MPCSExtraMessage must be the same as the table above
-// MPCSCustomLocation can be anything, however it must be continued below
+// MapPrompts_Custom1 can be anything, however it must be continued below
 
 	MapPrompts_CustomFakeClockHr = 20 // 0-23 This is the 24hr clock
 	MapPrompts_CustomFakeClockHrAlternate = 8 // 0 - 11 This is the 12hr clock
 
 // Although you may not use the 12hr style, we still need to apply it
 // However, FakeClockHrAlternate cannot go above 12
-// The system automatically handles AM/PM transitions
+// If FakeClockHr goes above 12, then Alternate restarts at 0
 // Like this:
 // FakeClockHr          = 10 11 12 13 14 15 16 17 18
 // FakeClockHrAlternate = 10 11 12  1  2  3  4  5  6
@@ -117,7 +122,7 @@ local function MapPrompts_Custom_FakeClock() // This is the fake clock
 
 	end
 
-	if GetConVar("MapPromptsTimeStamp12h"):GetBool() and MapPrompts_CustomFakeClockHrAlternate == 12 then
+	if GetConVar("MapPromptsTimeStamp12h"):GetBool() and MapPrompts_CustomFakeClockHr >= 12 then
 	MapPrompts_CustomFakeClockHrAlternate = 00
 
 	end
@@ -143,6 +148,7 @@ hook.Add("HUDPaint", "CustomIdentifier", function(ply)
 // Replace CustomIdentifier with a name of your choosing
 // So far, I've been using the map names as identifiers
 // Reduces the likelyhood of conflicts
+
 
 // Do not touch anything below until the next message
 
@@ -230,7 +236,7 @@ end
 	local ZPos = math.Round(tostring(ply:GetPos().z), 0)
 
 if Message == "" then
-Message = MPCSFixedMessage
+Message = FixedMessage
 end
 
 if !ply:Alive() then
@@ -365,7 +371,7 @@ local MapPrompts_CustomSpot = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPr
 // This table contains ALL the custom locations
 // This is how the code triggers the fade in/out mechanic
 // You must ALWAYS put the custom coordinates here:
-// (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1)
+// (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 nd ZPos == MapPrompts_CustomSpotZ1)
 
 local MapPrompts_CustomSpot1 = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1)
 
@@ -381,17 +387,31 @@ if !ply:Alive() or PromptsEnabled == false then
 
 // ^ Ignore ^
 
-if CustomSpot1 then
-	FixedSpotMessage = MPCSCustomLocation
+if MapPrompts_CustomSpot1 then
+	FixedSpotMessage = MapPrompts_Custom1Message1
+if GetConVar("MapPromptsUniqueMapNames"):GetBool() then
+	MPCSMessage2 = "Unique Title"
+	else
+	MPCSMessage2 = "Simple Title"
+end
 end
 
-// Remember MPCSCustomLocation from the start of the file?
+// Remember MapPrompts_Custom1Message1 from the start of the file?
 // This is where that comes in handy
 // When we enter our new custom location, the text prompt will be chosen from that specific table
+// The first part is the title portion, inside the quotation marks
+// The second half is the unique location name, unless unique map names are disabled
+// In which case it changes to the second variant
+
 // Unless you want it to only be a specific text
-// In which case replace MPCSCustomLocation with "Custom Text Here"
+// In which case replace MapPrompts_Custom1Message1 with "Custom Text Here"
 
 // FixedSpotMessage = "Custom Text Here"
+
+// The rest of this you are free to ignore
+// And that's it!
+// You've added Map Prompts support for a completely new map!
+// You've also saved me the hassle of having to do it myself, so thanks!
 
 if MapPrompts_CustomSpot and AlphaVal == 0 then
 	SpotTitleStart = true
@@ -433,8 +453,3 @@ end
 
 end)
 end
-
-// The rest of this you are free to ignore
-// And that's it!
-// You've added Map Prompts support for a completely new map!
-// You've also saved me the hassle of having to do it myself, so thanks!
