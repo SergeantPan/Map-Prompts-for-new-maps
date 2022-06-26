@@ -80,7 +80,7 @@ end
 // If FakeClockHr goes above 12, then Alternate restarts at 0
 // Like this:
 // FakeClockHr          = 10 11 12 13 14 15 16 17 18
-// FakeClockHrAlternate = 10 11 12  1  2  3  4  5  6
+// FakeClockHrAlternate = 10 11  0  1  2  3  4  5  6
 
 	MapPrompts_CustomFakeClockMin = 35 // 0 -  59 Minutes
 	MapPrompts_CustomFakeClockSec = 42 // 0 -  59 Seconds
