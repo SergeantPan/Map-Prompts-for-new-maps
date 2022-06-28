@@ -149,8 +149,13 @@ hook.Add("HUDPaint", "CustomIdentifier", function(ply)
 // So far, I've been using the map names as identifiers
 // Reduces the likelyhood of conflicts
 
-
 // Do not touch anything below until the next message
+
+	if GetConVar("MapPromptsUseCustomFont"):GetInt() == 1 then
+	PlayerFont = "PlayerCustomFont"
+	else
+	PlayerFont = "MapPromptsCustom"
+	end
 
 	local FadeSpeed = 80 * GetConVar("MapPromptsTextFadeSpeed"):GetInt()
 	local AlwaysSpawnMessage = GetConVar("MapPromptsAlwaysOnSpawn"):GetBool()
@@ -228,8 +233,8 @@ end
 	Timestamp = os.date( Hour .. ":%M:%S" .. Suffix )
 	end
 
-	local Alpha = Color( 255, 255, 255, math.Clamp(AlphaVal, 0, 255) )
-	local Alpha2 = Color( 255, 255, 255, math.Clamp(AlphaVal2, 0, 255) )
+	local Alpha = Color( GetConVar("FontColorR"):GetInt(), GetConVar("FontColorG"):GetInt(), GetConVar("FontColorB"):GetInt(), math.Clamp(AlphaVal, 0, 255) )
+	local Alpha2 = Color( GetConVar("FontColorR"):GetInt(), GetConVar("FontColorG"):GetInt(), GetConVar("FontColorB"):GetInt(), math.Clamp(AlphaVal2, 0, 255) )
 
 	local XPos = math.Round(tostring(ply:GetPos().x), 0)
 	local YPos = math.Round(tostring(ply:GetPos().y), 0)
@@ -278,13 +283,13 @@ if !ply:Alive() then
 	end
 
 if GetConVar("MapPromptsEnableMissionName"):GetBool() then
-	draw.DrawText( Message, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha, Alignment )
+	draw.DrawText( Message, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha, Alignment )
 end
 
 // STOP!!!
 
 if GetConVar("MapPromptsEnableMapName"):GetBool() then
-	draw.DrawText( MPCSMessage2, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha, Alignment )
+	draw.DrawText( MPCSMessage2, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha, Alignment )
 end
 
 // MPCSMessage2
@@ -293,10 +298,10 @@ end
 // If it's incorrect, the addon will throw errors
 
 if GetConVar("MapPromptsEnablePlayerName"):GetBool() then
-	draw.DrawText( PlayerTitle, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha, Alignment )
+	draw.DrawText( PlayerTitle, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha, Alignment )
 end
 if GetConVar("MapPromptsEnableTimeStamp"):GetBool() then
-	draw.DrawText( Timestamp, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha, Alignment )
+	draw.DrawText( Timestamp, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha, Alignment )
 end
 
 // Now the fun part
@@ -407,16 +412,16 @@ else
 end
 
 if GetConVar("MapPromptsEnableMissionName"):GetBool() then
-	draw.DrawText( FixedSpotMessage, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha2, Alignment )
+	draw.DrawText( FixedSpotMessage, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha2, Alignment )
 end
 if GetConVar("MapPromptsEnableMapName"):GetBool() then
-	draw.DrawText( MPCSMessage2, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha2, Alignment )
+	draw.DrawText( MPCSMessage2, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha2, Alignment )
 end
 if GetConVar("MapPromptsEnablePlayerName"):GetBool() then
-	draw.DrawText( PlayerTitle, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha2, Alignment )
+	draw.DrawText( PlayerTitle, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha2, Alignment )
 end
 if GetConVar("MapPromptsEnableTimeStamp"):GetBool() then
-	draw.DrawText( Timestamp, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha2, Alignment )
+	draw.DrawText( Timestamp, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha2, Alignment )
 end
 
 end)
