@@ -334,12 +334,12 @@ local MapPrompts_CustomSpotZ3 = math.Clamp(ZPos, -144, -27)
 // Simply paste it above and replace CustomSpot with your own prefix
 // There, the custom location has been created
 
-local MapPrompts_CustomSpot = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 nd ZPos == MapPrompts_CustomSpotZ1) or (XPos == MapPrompts_CustomSpotX2 and YPos == MapPrompts_CustomSpotY2 and ZPos == MapPrompts_CustomSpotZ2)
+local MapPrompts_CustomSpot = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1) or (XPos == MapPrompts_CustomSpotX2 and YPos == MapPrompts_CustomSpotY2 and ZPos == MapPrompts_CustomSpotZ2)
 
 // This table contains ALL the custom locations
 // This is how the code triggers the fade in/out mechanic
 // You must ALWAYS put the custom coordinates here:
-// (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 nd ZPos == MapPrompts_CustomSpotZ1)
+// (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1)
 
 local MapPrompts_CustomSpot1 = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 and ZPos == MapPrompts_CustomSpotZ1)
 
