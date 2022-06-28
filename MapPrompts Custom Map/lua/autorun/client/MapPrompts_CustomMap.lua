@@ -80,7 +80,7 @@ end
 // If FakeClockHr goes above 12, then Alternate restarts at 0
 // Like this:
 // FakeClockHr          = 10 11 12 13 14 15 16 17 18
-// FakeClockHrAlternate = 10 11  0  1  2  3  4  5  6
+// FakeClockHrAlternate = 10 11 12  1  2  3  4  5  6
 
 	MapPrompts_CustomFakeClockMin = 35 // 0 -  59 Minutes
 	MapPrompts_CustomFakeClockSec = 42 // 0 -  59 Seconds
@@ -233,7 +233,11 @@ end
 
 	local XPos = math.Round(tostring(ply:GetPos().x), 0)
 	local YPos = math.Round(tostring(ply:GetPos().y), 0)
-	local ZPos = math.Round(tostring(ply:GetPos().z), 0)
+	local ZPos = math.Round(tostring(ply:GetPos().z), 0) + 5
+//											^^
+// This means the prompt wont look for the players position on the ground
+// But rather slightly above it
+// This means that areas that arent flat will still trigger the prompt
 
 if Message == "" then
 Message = FixedMessage
@@ -316,55 +320,19 @@ local MapPrompts_CustomSpotZ3 = math.Clamp(ZPos, -144, -27)
 // Lets explain how you can do this yourself:
 
 // When you are ingame, and at a location you wish to have a custom prompt
-// Go to one corner of the area (noclipping into walls is acceptable, and even reasonable)
-// Use the console command 'MarkPosition'
+// Use MarkPosition1 and MarkPosition2 to mark opposing corners
+// Note that these coordinates are based on what you are looking at
+// Think of it as a line coming out of your eyes
+// Once both corners are marked, use CreatePosition
 // Something like this should appear in the console:
 
-// Your X: 346
-// Your Y: 357
-// Your Z: 50
+// local CustomSpotX1 = math.Clamp(-3264, 1472)
+// local CustomSpotY1 = math.Clamp(-1215, 1408)
+// local CustomSpotZ1 = math.Clamp(-11136, -11007)
 
-// Now do this again for the opposite corner
-
-// Your X: 172
-// Your Y: 865
-// Your Z: 45
-
-// Now we have our box. Now to make it a functional area in the code
-
-// If we are using positive values (as above) then the finished line should look like this
-
-// local MapPrompts_CustomSpotX1 = math.Clamp(XPos, 172, 346)
-// local MapPrompts_CustomSpotY1 = math.Clamp(YPos, 357, 865)
-// local MapPrompts_CustomSpotZ1 = math.Clamp(ZPos, 45, 50)
-
-// However, if we are dealing with negatives, then we have to reverse the positions
-
-// local MapPrompts_CustomSpotX1 = math.Clamp(XPos, -346, -172)
-// local MapPrompts_CustomSpotY1 = math.Clamp(YPos, -865, -357)
-// local MapPrompts_CustomSpotZ1 = math.Clamp(ZPos, -50, -45)
-
-// If the coordinates are negative, then the number FURTHEST from 0 must be first
-// -50 > -45
-// The one closest to 0 will be second
-// Also, I suggest putting some leeway to the values
-// The system can be a bit finnicky, so I suggest making the X and Y coordinates ~10-15 bigger than they are
-
-// Again, using the last examples:
-
-// local MapPrompts_CustomSpotX1 = math.Clamp(XPos, 165, 375)
-// local MapPrompts_CustomSpotY1 = math.Clamp(YPos, 325, 895)
-// local MapPrompts_CustomSpotZ1 = math.Clamp(ZPos, 25, 80)
-
-// The Z value has a lot more leniency, because of funky LUA mechanics
-// With negatives it gets a bit tricky
-// But basically, "Bigger" number becomes bigger, smaller number becomes smaller
-
-// local MapPrompts_CustomSpotX1 = math.Clamp(XPos, -380, -125)
-// local MapPrompts_CustomSpotY1 = math.Clamp(YPos, -900, -300)
-// local MapPrompts_CustomSpotZ1 = math.Clamp(ZPos, -90, -25)
-
-// There, we have our map coordinates
+// This is our custom location
+// Simply paste it above and replace CustomSpot with your own prefix
+// There, the custom location has been created
 
 local MapPrompts_CustomSpot = (XPos == MapPrompts_CustomSpotX1 and YPos == MapPrompts_CustomSpotY1 nd ZPos == MapPrompts_CustomSpotZ1) or (XPos == MapPrompts_CustomSpotX2 and YPos == MapPrompts_CustomSpotY2 and ZPos == MapPrompts_CustomSpotZ2)
 
@@ -378,6 +346,7 @@ local MapPrompts_CustomSpot1 = (XPos == MapPrompts_CustomSpotX1 and YPos == MapP
 // This is for making specific locations
 // This is how we trigger unique messages
 // Each unique location must have a separate line
+// Unless you want multiple locations to trigger the same message
 
 if !ply:Alive() or PromptsEnabled == false then
 	SpotTitleStart = false
@@ -401,11 +370,6 @@ end
 // The first part is the title portion, inside the quotation marks
 // The second half is the unique location name, unless unique map names are disabled
 // In which case it changes to the second variant
-																		
-// You can have multiple locations trigger the same prompt aswell
-// Like This:
-// if MapPrompts_CustomSpot1 or MapPrompts_CustomSpot2 then
-// FixedSpotMessage = MapPrompts_Custom1Message1
 
 // Unless you want it to only be a specific text
 // In which case replace MapPrompts_Custom1Message1 with "Custom Text Here"
