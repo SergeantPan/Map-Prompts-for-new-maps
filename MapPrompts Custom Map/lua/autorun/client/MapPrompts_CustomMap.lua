@@ -245,7 +245,7 @@ end
 // This means that areas that arent flat will still trigger the prompt
 
 if Message == "" then
-Message = FixedMessage
+Message = MPCSFixedMessage
 end
 
 if !ply:Alive() then
