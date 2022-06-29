@@ -122,7 +122,7 @@ local function MapPrompts_Custom_FakeClock() // This is the fake clock
 
 	end
 
-	if GetConVar("MapPromptsTimeStamp12h"):GetBool() and MapPrompts_CustomFakeClockHr >= 12 then
+	if GetConVar("MapPromptsTimeStamp12h"):GetBool() and MapPrompts_CustomFakeClockHrAlternate == 12 then
 	MapPrompts_CustomFakeClockHrAlternate = 00
 
 	end
