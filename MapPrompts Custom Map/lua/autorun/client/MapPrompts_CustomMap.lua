@@ -390,16 +390,16 @@ else
 end
 
 if GetConVar("MapPromptsEnableMissionName"):GetBool() then
-	draw.DrawText( FinalMessage, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha, Alignment )
+	draw.DrawText( FinalMessage, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha, Alignment )
 end
 if GetConVar("MapPromptsEnableMapName"):GetBool() then
-	draw.DrawText( FinalMessage2, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha, Alignment )
+	draw.DrawText( FinalMessage2, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha, Alignment )
 end
 if GetConVar("MapPromptsEnablePlayerName"):GetBool() then
-	draw.DrawText( FinalPlayerTitle, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha, Alignment )
+	draw.DrawText( FinalPlayerTitle, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha, Alignment )
 end
 if GetConVar("MapPromptsEnableTimeStamp"):GetBool() then
-	draw.DrawText( FinalTimestamp, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha, Alignment )
+	draw.DrawText( FinalTimestamp, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha, Alignment )
 end
 
 // Until now, if everything went smoothly you wont have to do anything
@@ -532,16 +532,16 @@ else
 end
 
 if GetConVar("MapPromptsEnableMissionName"):GetBool() then
-	draw.DrawText( FixedSpotMessage, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha2, Alignment )
+	draw.DrawText( FinalSpotMessage, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd1)), Alpha2, Alignment )
 end
 if GetConVar("MapPromptsEnableMapName"):GetBool() then
-	draw.DrawText( MPCSMessage2, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha2, Alignment )
+	draw.DrawText( FinalSpotMessage2, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd2)), Alpha2, Alignment )
 end
 if GetConVar("MapPromptsEnablePlayerName"):GetBool() then
-	draw.DrawText( PlayerTitle, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha2, Alignment )
+	draw.DrawText( FinalPlayerTitle, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd3)), Alpha2, Alignment )
 end
 if GetConVar("MapPromptsEnableTimeStamp"):GetBool() then
-	draw.DrawText( Timestamp, "MapPromptsCustom", ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha2, Alignment )
+	draw.DrawText( FinalTimestamp, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha2, Alignment )
 end
 
 end)
