@@ -460,9 +460,15 @@ if !ply:Alive() or PromptsEnabled == false then
 	AlphaVal2 = 0
 	end
 
-if MegaCityOne1Spot1 then
+if MPCSSpot1 then
 	FixedSpotMessage = MPCSCustomLocation
-	MPCSSpotMessage2 = MPCSMessage2
+if GetConVar("MapPromptsUniqueMapNames"):GetBool() and GetConVar("MapPromptsCustomMapName"):GetString() == "" then
+	MPCSSpotMessage2 = "Custom Location"
+elseif GetConVar("MapPromptsCustomMapName"):GetString() != "" then
+	MPCSSpotMessage2 = GetConVar("MapPromptsCustomMapName"):GetString()
+else
+	MPCS3SpotMessage2 = "Cust Loc"
+end
 end
 
 // Remember MPCSCustomLocation from the start of the file?
@@ -481,7 +487,7 @@ end
 // This will alter the second line of text on the prompt
 // I recommend this if you want to have unique location names
 
-// MPCSSpotMessage2 = "Custom Location Here"
+// MPCSSpotMessage2 = "Custom Location Here
 
 // The rest of this you are free to ignore
 // And that's it!
