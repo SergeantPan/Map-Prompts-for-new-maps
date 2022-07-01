@@ -408,12 +408,6 @@ local MPCSSpotZ3 = math.Clamp(ZPos, -100, -5)
 // They are automatically formatted, so you only have to copy/paste them here
 // And then edit the "CustomSpot" name to fit MPCS
 
-local MapPrompts_CustomSpot = (XPos == MPCSSpotX1 and YPos == MPCSSpotY1 and ZPos == MPCSSpotZ1) or (XPos == MPCSSpotX2 and YPos == MPCSSpotY2 and ZPos == MPCSSpotZ2) or (XPos == MPCSSpotX3 and YPos == MPCSSpotY3 and ZPos == MPCSSpotZ3)
-
-// This line must contain ALL of the tables below
-// This is for starting the fade in effect of the text
-// I.e. When you reach any of the custom spots, the text will begin to appear
-
 local MapPrompts_CustomSpot1 = (XPos == MPCSSpotX1 and YPos == MPCSSpotY1 and ZPos == MPCSSpotZ1)
 
 local MapPrompts_CustomSpot2 = (XPos == MPCSSpotX2 and YPos == MPCSSpotY2 and ZPos == MPCSSpotZ2)
@@ -424,6 +418,12 @@ local MapPrompts_CustomSpot3 = (XPos == MPCSSpotX3 and YPos == MPCSSpotY3 and ZP
 // Each one has unique coordinates, for creating specific prompts
 // Though you can have multiple spots trigger the same message, as youll see below
 // Use the above examples to add in more locations
+
+local MapPrompts_CustomSpot = MapPrompts_CustomSpot1 or MapPrompts_CustomSpot2 or MapPrompts_CustomSpot3
+
+// This line must contain ALL of the tables above
+// This is for starting the fade in effect of the text
+// I.e. When you reach any of the custom spots, the text will begin to appear
 
 if !ply:Alive() or PromptsEnabled == false then
 	SpotTitleStart = false
