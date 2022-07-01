@@ -431,7 +431,7 @@ if !ply:Alive() or PromptsEnabled == false then
 	AlphaVal2 = 0
 	end
 
-if MapPrompts_CustomSpot then
+if MapPrompts_CustomSpot1 then
 	FixedSpotMessage = MPCSExtraSpotMessage
 	FixedSpotMessage2 = "Custom Location"
 end
