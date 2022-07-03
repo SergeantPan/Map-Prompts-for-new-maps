@@ -194,7 +194,7 @@ end
 
 	local PromptsEnabled = GetConVar("MapPromptsCustomLocationPrompts"):GetBool()
 
-if IsValid(StormFox2) then
+if ConVarExists("sf_enable_mapsupport") then
 	SF2TimeStamp = StormFox2.Time.TimeToString(nil, StormFox2.Setting.GetCache("12h_display"))
 end
 
@@ -250,7 +250,7 @@ if GetConVar("MapPromptsTimeStampStyle"):GetInt() == 1 then
 	Timestamp = os.date( Hour .. ":%M:%S" .. Suffix )
 elseif GetConVar("MapPromptsTimeStampStyle"):GetInt() == 2 then
 	Timestamp = FakeClockDebug1 .. MapPrompts_CustomFakeClockHrVisual .. FakeClockDebug2 .. MapPrompts_CustomFakeClockMin .. FakeClockDebug3 .. MapPrompts_CustomFakeClockSec .. Suffix
-elseif GetConVar("MapPromptsTimeStampStyle"):GetInt() == 3 and IsValid(SF2TimeStamp) then
+elseif GetConVar("MapPromptsTimeStampStyle"):GetInt() == 3 and ConVarExists("sf_enable_mapsupport") then
 	Timestamp = SF2TimeStamp
 else
 	Timestamp = os.date( Hour .. ":%M:%S" .. Suffix )
