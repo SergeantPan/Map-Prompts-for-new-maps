@@ -114,8 +114,10 @@ local function MapPrompts_Custom_FakeClock()
 end
 	timer.Create( "MapPrompts_CustomClock", 1, 0, MapPrompts_Custom_FakeClock )
 
+hook.Add("HUDPaint", "CustomIdentifier", function(ply)
+
 if game.GetMap() == "YourChosenMap" and GetConVar("MapPromptsEnabled"):GetBool() then
-// 					^^
+// 			^^
 // This is the custom map you want to support
 // If the player is playing on said map, this file will trigger
 // Replace YourChosenMap with the name of the map you're playing on
@@ -125,8 +127,6 @@ if game.GetMap() == "YourChosenMap" and GetConVar("MapPromptsEnabled"):GetBool()
 MapPromptsSupport = "YourChosenMap"
 
 // We add support, meaning the fallback system will not trigger
-
-hook.Add("HUDPaint", "CustomIdentifier", function(ply)
 
 // Replace CustomIdentifier with a name of your choosing
 // So far, I've been using the map names as identifiers
@@ -516,5 +516,5 @@ if GetConVar("MapPromptsEnableTimeStamp"):GetBool() then
 	draw.DrawText( FinalTimestamp, PlayerFont, ScrW() * Width, ScrH() * (Height + (0.03 * CustomAdd4)), Alpha2, Alignment )
 end
 
-end)
 end
+end)
