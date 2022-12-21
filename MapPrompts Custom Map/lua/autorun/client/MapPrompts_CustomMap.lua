@@ -43,9 +43,10 @@ local MPCSMessage = {
 
 	local MPCSChapterTitle = '"Custom Chapter"'
 
-// This is the custom chapter title
-// Basically only used for campaign maps
-// You can remove this if you wish
+// This is the custom chapter title. Whether or not you want this active is up to you
+// Its intended use is to copy the Chapter Titles used by campaign maps
+// E.g. on HL2 maps this would be: "Sandtraps", "Anticitizen One", "We Don't Go To Ravenholm", etc.
+// You can remove this if you want, it has no effect on the addon
 
 local MPCSExtraMessage = {
 '"Custom Prompt 1"',
@@ -116,6 +117,10 @@ end
 
 hook.Add("HUDPaint", "CustomIdentifier", function(ply)
 
+// Replace CustomIdentifier with a name of your choosing
+// So far, I've been using the map names as identifiers
+// Reduces the likelyhood of conflicts
+
 if game.GetMap() == "YourChosenMap" and GetConVar("MapPromptsEnabled"):GetBool() then
 // 			^^
 // This is the custom map you want to support
@@ -127,47 +132,55 @@ if game.GetMap() == "YourChosenMap" and GetConVar("MapPromptsEnabled"):GetBool()
 MapPromptsSupport = "YourChosenMap"
 
 // We add support, meaning the fallback system will not trigger
-
-// Replace CustomIdentifier with a name of your choosing
-// So far, I've been using the map names as identifiers
-// Reduces the likelyhood of conflicts
+// This must be the same name as you set above
 
 if GetConVar("MapPromptsCustomMissionName"):GetString() != "" then
 	MPCSMessage = GetConVar("MapPromptsCustomMissionName"):GetString()
 	MPCSSpotMessage = GetConVar("MapPromptsCustomMissionName"):GetString()
+
+// If you removed local MPCSChapterTitle = '"Custom Chapter"' earlier
+// Then delete the following 3 lines of code
 // From here
 elseif GetConVar("MapPromptsCustomMissionName"):GetString() == "" and GetConVar("MapPromptsCampaignTitles"):GetBool() then
 	MPCSMessage = MPCSChapterTitle
 	MPCSSpotMessage = MPCSChapterTitle
 // To here
+// This will not affect the addon, it simply removes the CampaignTitles function from this specific map
+
 else
 	MPCSMessage = MPCSSpawnMessage
 	MPCSSpotMessage = FixedSpotMessage
 end
 
-// If you removed the ChapterTitle then remove the marked portion
-
 if GetConVar("MapPromptsCustomMapName"):GetString() != "" then
 	MPCSMessage2 = GetConVar("MapPromptsCustomMapName"):GetString()
 	MPCSSpotMessage2 = GetConVar("MapPromptsCustomMapName"):GetString()
 elseif GetConVar("MapPromptsCustomMapName"):GetString() == "" and !GetConVar("MapPromptsUniqueMapNames"):GetBool() then
+
+// This is where we edit some stuff
+// ShortLoc is the shortened name, active when "Unique map names" is disabled
+// Personally, I just make it a shortened version of the map name
+// E.g., "Canals-01", "City17-01", "Town-01"
 	MPCSMessage2 = "ShortLoc"
 	MPCSSpotMessage2 = "ShortLoc"
-else
-	MPCSMessage2 = "Long Location"
-	MPCSSpotMessage2 = FixedSpotMessage2
-end
+// However you are free to edit this as you see fit
 
-// This, however we do
-// ShortLoc is the shortened name, active when "Unique map names" is disabled
+else
+
 // Long location is the title used when the player spawns in
+// Edit it as you see fit, though I personally prefer to use location-accurate names
+// E.g., "City 17 - Trainstation", "Ravenholm", "The Citadel - Inside"
+	MPCSMessage2 = "Long Location"
 // It will not change whatsoever, unless you intend it to
-// However most of the time its not really a necessity
+// This part will be covered later
+	MPCSSpotMessage2 = FixedSpotMessage2
+// Leave FixedSpotMessage2 as it is, this will be altered by location triggers later
+end
 
 // This is basically the "Hard part" complete
 // The functions below are not important
 // They are merely for formatting and general function of the script
-// Jump down until you see the message "Stop here"
+// Jump down (or search for the sentence) until you see the message "Stop here"
 
 if GetConVar("MapPromptsUseCustomFont"):GetInt() == 1 then
 	PlayerFont = "PlayerCustomFont"
@@ -391,33 +404,16 @@ end
 // Now we get to the fun part
 // The custom location prompts
 
-local MPCSSpotX1 = math.Clamp(XPos, 3444, 3776)
-local MPCSSpotY1 = math.Clamp(YPos, 2624, 3072)
-local MPCSSpotZ1 = math.Clamp(ZPos, -64, 74)
+local MapPrompts_CustomSpot1 = (XPos == math.Clamp(XPos, 3444, 3776) and YPos == math.Clamp(YPos, 2624, 3072) and ZPos == math.Clamp(ZPos, -64, 74))
 
-local MPCSSpotX2 = math.Clamp(XPos, 320, 400)
-local MPCSSpotY2 = math.Clamp(YPos, 15, 50)
-local MPCSSpotZ2 = math.Clamp(ZPos, -64, -32)
+local MapPrompts_CustomSpot2 = (XPos == math.Clamp(XPos, 320, 400) and YPos == math.Clamp(YPos, 15, 50) and math.Clamp(ZPos, -64, -32))
 
-local MPCSSpotX3 = math.Clamp(XPos, -580, -350)
-local MPCSSpotY3 = math.Clamp(YPos, -100, 220)
-local MPCSSpotZ3 = math.Clamp(ZPos, -100, -5)
+local MapPrompts_CustomSpot3 = (XPos == math.Clamp(XPos, -580, -350) and YPos == math.Clamp(YPos, -100, 220) and ZPos == math.Clamp(ZPos, -100, -5))
 
 // These are examples of custom locations
-// You get these from using the 'MarkPosition' and 'CreatePosition' commands
+// You get these from using the 'MarkPosition1/2' and 'CreatePosition' commands
 // They are automatically formatted, so you only have to copy/paste them here
-// And then edit the "CustomSpot" name to fit MPCS
-
-local MapPrompts_CustomSpot1 = (XPos == MPCSSpotX1 and YPos == MPCSSpotY1 and ZPos == MPCSSpotZ1)
-
-local MapPrompts_CustomSpot2 = (XPos == MPCSSpotX2 and YPos == MPCSSpotY2 and ZPos == MPCSSpotZ2)
-
-local MapPrompts_CustomSpot3 = (XPos == MPCSSpotX3 and YPos == MPCSSpotY3 and ZPos == MPCSSpotZ3)
-
-// These are the custom locations
-// Each one has unique coordinates, for creating specific prompts
-// Though you can have multiple spots trigger the same message, as youll see below
-// Use the above examples to add in more locations
+// You can also use 'MarkPositionPrefix' to change MapPrompts_CustomSpot on the fly
 
 local MapPrompts_CustomSpot = MapPrompts_CustomSpot1 or MapPrompts_CustomSpot2 or MapPrompts_CustomSpot3
 
@@ -431,27 +427,32 @@ if !ply:Alive() or PromptsEnabled == false then
 	AlphaVal2 = 0
 	end
 
+// You can ignore this part above
+// It's simply for disabling/fading out the text on player death
+
 if MapPrompts_CustomSpot1 then
 	FixedSpotMessage = MPCSExtraSpotMessage
 	FixedSpotMessage2 = "Custom Location"
 end
 
-// This spot will create a name from MPCSExtraMessage table
-// And the location will use a specific name
+// This is where the locations we marked earlier come in handy
+// MapPromps_CustomSpot1 will now take a name from the MPCSExtraMessage table
+// And the location will be whatever is written inside the quotes
+// This replaces the "Long Location" text we entered earlier
 
 if MapPrompts_CustomSpot2 or MapPrompts_CustomSpot3 then
 	FixedSpotMessage = MPCSMessage
 	FixedSpotMessage2 = MPCSMessage2
 end
 
-// The above set uses two specific spots, and will trigger the title and location on the spawn message
-// Rather than using custom ones
+// The above set uses two specific spots, and both will trigger the title and location used by the spawn message
 // Do note that FixedSpotMessage and FixedSpotMessage2 must always be defined
 // Otherwise the code throws an error
-// If you dont want the message to change from the previous location, simply use the same line
-// In this case, replace MPCSMessage with MPCSExtraSpotMessage
-// And the second and third locations will display the same name
-// Or replace MPCSMessage2 with "Custom Location"
+
+// You can also use the same message as the last location
+// In this case, replace MPCSMessage with MPCSExtraSpotMessage and the title will be the same as the previous location
+// MCPSMessage2 means the location will be the same as the "Long Location" earlier
+// You can also replace MPCSMessage2 with whatever you want, like on MapPrompts_CustomSpot1
 
 // And thats about it
 // The rest of this code performs the text fade in/out
