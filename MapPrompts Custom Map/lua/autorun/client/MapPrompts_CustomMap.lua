@@ -188,32 +188,37 @@ else
 	PlayerFont = "MapPromptsCustom"
 end
 
-	local ScrollingTitles = GetConVar("MapPromptsExperimentalScrolling"):GetBool()
+	ScrollingTitles = GetConVar("MapPromptsExperimentalScrolling"):GetBool()
 
-	local FadeSpeed = 80 * GetConVar("MapPromptsTextFadeSpeed"):GetInt()
+	FadeSpeed = 80 * GetConVar("MapPromptsTextFadeSpeed"):GetInt()
 
-	local Alignment = GetConVar("MapPromptsTextAlignment"):GetInt()
+	Alignment = GetConVar("MapPromptsTextAlignment"):GetInt()
 
-	local Width = GetConVar("MapPromptsTextXPos"):GetFloat()
-	local Height = GetConVar("MapPromptsTextYPos"):GetFloat()
+	Width = GetConVar("MapPromptsTextXPos"):GetFloat()
+	Height = GetConVar("MapPromptsTextYPos"):GetFloat()
 
-	local CustomAdd1 = GetConVar("MapPromptsMissionNameOffset"):GetInt()
-	local CustomAdd2 = GetConVar("MapPromptsMapNameOffset"):GetInt()
-	local CustomAdd3 = GetConVar("MapPromptsPlayerNameOffset"):GetInt()
-	local CustomAdd4 = GetConVar("MapPromptsTimeStampOffset"):GetInt()
+	CustomAdd1 = GetConVar("MapPromptsMissionNameOffset"):GetInt()
+	CustomAdd2 = GetConVar("MapPromptsMapNameOffset"):GetInt()
+	CustomAdd3 = GetConVar("MapPromptsPlayerNameOffset"):GetInt()
+	CustomAdd4 = GetConVar("MapPromptsTimeStampOffset"):GetInt()
 
-	local FirstRespawn = GetConVar("MapPromptsFirstSpawn"):GetBool()
-	local AlwaysSpawnMessage = GetConVar("MapPromptsAlwaysOnSpawn"):GetBool()
+	CustomOffset1 = GetConVar("MapPromptsMissionNameOffsetCust"):GetFloat()
+	CustomOffset2 = GetConVar("MapPromptsMapNameOffsetCust"):GetFloat()
+	CustomOffset3 = GetConVar("MapPromptsPlayerNameOffsetCust"):GetFloat()
+	CustomOffset4 = GetConVar("MapPromptsTimeStampOffsetCust"):GetFloat()
 
-	local PromptsEnabled = GetConVar("MapPromptsCustomLocationPrompts"):GetBool()
+	FirstRespawn = GetConVar("MapPromptsFirstSpawn"):GetBool()
+	AlwaysSpawnMessage = GetConVar("MapPromptsAlwaysOnSpawn"):GetBool()
+
+	PromptsEnabled = GetConVar("MapPromptsCustomLocationPrompts"):GetBool()
 
 if ConVarExists("sf_enable_mapsupport") then
 	SF2TimeStamp = StormFox2.Time.TimeToString(nil, StormFox2.Setting.GetCache("12h_display"))
 end
 
-	local ConstantAreaTrigger = GetConVar("MapPromptsLocationPersistence"):GetBool()
+	ConstantAreaTrigger = GetConVar("MapPromptsLocationPersistence"):GetBool()
 
-	local ply = LocalPlayer()
+	ply = LocalPlayer()
 
 if GetConVar("MapPromptsPlayerName"):GetString() == "" then
 	PlayerTitle = ply:Nick()
@@ -277,9 +282,9 @@ else
 	Alpha2 = Color( GetConVar("FontColorR"):GetInt(), GetConVar("FontColorG"):GetInt(), GetConVar("FontColorB"):GetInt(), math.Clamp(AlphaVal2, 0, 255) )
 end
 
-	local XPos = math.Round(tostring(ply:GetPos().x), 0)
-	local YPos = math.Round(tostring(ply:GetPos().y), 0)
-	local ZPos = math.Round(tostring(ply:GetPos().z), 0) + 3
+	XPos = math.Round(tostring(ply:GetPos().x), 0)
+	YPos = math.Round(tostring(ply:GetPos().y), 0)
+	ZPos = math.Round(tostring(ply:GetPos().z), 0) + 3
 
 if ScrollingTitles == true then
 	FinalMessage = string.Left(MPCSMessage, Addline1)
@@ -404,18 +409,18 @@ end
 // Now we get to the fun part
 // The custom location prompts
 
-local MapPrompts_CustomSpot1 = (XPos == math.Clamp(XPos, 3444, 3776) and YPos == math.Clamp(YPos, 2624, 3072) and ZPos == math.Clamp(ZPos, -64, 74))
+MapPrompts_CustomSpot1 = (XPos == math.Clamp(XPos, 3444, 3776) and YPos == math.Clamp(YPos, 2624, 3072) and ZPos == math.Clamp(ZPos, -64, 74))
 
-local MapPrompts_CustomSpot2 = (XPos == math.Clamp(XPos, 320, 400) and YPos == math.Clamp(YPos, 15, 50) and math.Clamp(ZPos, -64, -32))
+MapPrompts_CustomSpot2 = (XPos == math.Clamp(XPos, 320, 400) and YPos == math.Clamp(YPos, 15, 50) and math.Clamp(ZPos, -64, -32))
 
-local MapPrompts_CustomSpot3 = (XPos == math.Clamp(XPos, -580, -350) and YPos == math.Clamp(YPos, -100, 220) and ZPos == math.Clamp(ZPos, -100, -5))
+MapPrompts_CustomSpot3 = (XPos == math.Clamp(XPos, -580, -350) and YPos == math.Clamp(YPos, -100, 220) and ZPos == math.Clamp(ZPos, -100, -5))
 
 // These are examples of custom locations
 // You get these from using the 'MarkPosition1/2' and 'CreatePosition' commands
 // They are automatically formatted, so you only have to copy/paste them here
 // You can also use 'MarkPositionPrefix' to change MapPrompts_CustomSpot on the fly
 
-local MapPrompts_CustomSpot = MapPrompts_CustomSpot1 or MapPrompts_CustomSpot2 or MapPrompts_CustomSpot3
+MapPrompts_CustomSpot = MapPrompts_CustomSpot1 or MapPrompts_CustomSpot2 or MapPrompts_CustomSpot3
 
 // This line must contain ALL of the tables above
 // This is for starting the fade in effect of the text
